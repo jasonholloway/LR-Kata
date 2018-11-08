@@ -6,8 +6,9 @@
         "target": "es5",
         "jsx": "react",
         "esModuleInterop": true,
+        "lib": ["es2015" ]
     },
     "include": [
-        "./src/**/*"
+        "./src/**/*", "tests/components/HotelSearch.test.tsx"
     ]
 }

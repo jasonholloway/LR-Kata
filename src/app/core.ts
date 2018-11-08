@@ -1,5 +1,8 @@
-type ActionType = 'SEARCH_REQUEST' | 'SEARCH_RESULT' | 'SEARCH_ERROR'
-type Action = { type: ActionType }
+import { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import { Reducer } from 'redux';
+
+type AppActionType = 'SEARCH_START' | 'SEARCH_RESULT' | 'SEARCH_ERROR' | 'ERROR'
+type AppAction = { type: AppActionType }
 
 type State = {
     isSearching: boolean,
@@ -7,29 +10,57 @@ type State = {
     errors: any[]
 }
 
-type Dispatch = (action: Action) => void
+type Services = { }
 
-const defaultState: State = {
-    isSearching: false,
-    hotels: [],
-    errors: []
+type Reduction = State | ThunkAction<Promise<void>, State, Services, AppAction>
+
+
+function reduce(state: State, action: AppAction): Reduction {
+    return initialize(state)
+        || reduceError(state, action)
+        || reduceSearch(state, action)
+        || noop(state);
 }
 
-function reducer(state: State, action?: Action) {
-    if(!state) return defaultState;
+
+type r = Reducer<State, AppAction>
+
+
+function initialize(state: State): Reduction | false {
+    if(!state) {
+        return {
+            isSearching: false,
+            hotels: [],
+            errors: []
+        };        
+    }
+    return false;
+}
+
+function reduceError(state: State, action: AppAction): Reduction | false {
+    return false;
+}
+
+function reduceSearch(state: State, action: AppAction): Reduction | false {
     switch(action.type) {
-        case 'SEARCH_REQUEST':
-            return { ...state, isSearching: true };
+        case 'SEARCH_START':
+            return async (dispatch, getState) => {
+                //return { ...state, isSearching: true };
+            };
+
         case 'SEARCH_RESULT':
             return state;
+
         case 'SEARCH_ERROR':
             return state;
+
+        default:
+            return false;
     }
-    assertUnreachable(action.type);
 }
 
-function assertUnreachable(x: never): never {
-    throw new Error(`Didn't expect to get here`);
+function noop(state: State): Reduction {
+    return state;
 }
 
-export { ActionType, Action, Dispatch, State, reducer }
+export { AppActionType, AppAction, Services, Reduction, State, reduce }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Dispatch, State } from './core'
+import { State } from './core'
+import { Dispatch } from "redux";
 
 type Props = ReturnType<typeof stateProps> & ReturnType<typeof dispatchProps>
 
