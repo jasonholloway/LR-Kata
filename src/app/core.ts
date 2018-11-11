@@ -7,7 +7,7 @@ type State = {
     errors: any[]
 }
 
-function reduce(state: State, action: Action): State {
+function reducer(state: State, action: Action): State {
     return initial(state)
         || reduceError(state, action)
         || reduceSearch(state, action)
@@ -44,4 +44,4 @@ function noop(state: State): State {
     return state;
 }
 
-export { State, reduce }
+export { State, reducer }

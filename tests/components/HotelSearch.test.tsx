@@ -3,27 +3,31 @@ import React from "react";
 import { Provider } from "react-redux";
 import "jest-enzyme"
 import { createStore, Store, applyMiddleware } from "redux";
-import { State, reduce } from '../../src/app/core'
+import { State, reducer } from '../../src/app/core'
 import HotelSearch from '../../src/app/HotelSearch'
-import fakeSearcher from '../fakes/fakeSearcher'
-import { Action } from "../../src/app/actions";
+import { Action } from "../../src/app/Action";
+import FakeSearcher from "../fakes/FakeSearcher";
+import { hotelsSearched } from "../../src/app/actions";
+import ActionSnooper from "../fakes/ActionSnooper";
 
 describe('HotelSearch', () => {
 
     let dom, section: ReactWrapper;
+    let snooper: ActionSnooper;
+    let searcher: FakeSearcher;
     let store: Store<State, Action>;
 
-    let fakeTasks: (() => Promise<void> | void)[];
-    const flushFakes = () => Promise.all(fakeTasks.map(fn => fn()));
-
     beforeEach(() => {
-        fakeTasks = [];
+        snooper = new ActionSnooper();
+        searcher = new FakeSearcher();
 
         store = createStore(
-            reduce,
-            applyMiddleware(fakeSearcher(t => fakeTasks.push(t)))
+            reducer,
+            applyMiddleware(
+                snooper.middleware(),
+                searcher.middleware())
         );
-
+        
         dom = mount(<Provider store={store}><HotelSearch/></Provider>);
         section = dom.find('section#hotelList');
     })
@@ -40,15 +44,20 @@ describe('HotelSearch', () => {
         it('lists no hotels', () => {
             expect(section.find('ul li')).not.toExist();
         })
+
+        it('searches for Skegness', () => {
+            expect(snooper.actions)
+               .toContainEqual(hotelsSearched({ filter: 'Skegness' }));
+        })
     })
 
     describe('after a slight gap', () => {
         beforeEach(async () => {
-            await flushFakes();
+            await searcher.flush();
             section = section.update();
         })
 
-        it('lists some hotels, via Searcher', () => {
+        it('lists some hotels', () => {
             expect(section.find('ul li')).toExist();
         })
     })
