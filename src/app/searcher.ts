@@ -1,4 +1,6 @@
 import { Middleware } from "redux";
+import * as actions from './actions'
+
 
 const searcher: Middleware = ({dispatch}) => next => action => {
     next(action);

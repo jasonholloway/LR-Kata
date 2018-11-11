@@ -1,8 +1,8 @@
 import { Middleware } from "redux";
-import { Action, hotelsSearched, hotelsFound } from "../../src/app/actions";
+import { hotelsSearched, hotelsFound } from "../../src/app/actions";
+import { Action } from "../../src/app/Action";
 
 const fakeSearcher: FakeMiddleware = enqueue => ({dispatch}) => next => (action: Action) => {
-    
     switch(action.type) {
         case hotelsSearched.type:
             return enqueue(() => {

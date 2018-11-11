@@ -1,5 +1,5 @@
-import { Action, hotelsFound } from "./actions";
-import redux from 'redux'
+import { hotelsFound } from "./actions";
+import { Action } from "./Action";
 
 type State = {
     isSearching: boolean,

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { State } from './core'
 import { Dispatch } from "redux";
 import { hotelsSearched } from "./actions";
-import { summedReturnTypes } from "./utils";
+import { sumReturnTypes } from "./utils";
 
 function stateProps(state: State) {
     return {
@@ -17,7 +17,7 @@ function dispatchProps(dispatch: Dispatch) {
     };
 }
 
-type Props = summedReturnTypes<typeof stateProps, typeof dispatchProps>
+type Props = sumReturnTypes<typeof stateProps, typeof dispatchProps>
 
 class View extends Component<Props> {
     

@@ -1,17 +1,10 @@
-import { createAction } from "./utils";
-                          
+import { actionCreator } from "./utils";
 
-export const hotelsSearched = createAction('HOTELS_SEARCHED')
-                                .withProps<{ filter: string }>();
+export const hotelsSearched     = actionCreator('HOTELS_SEARCHED')
+                                    .withProps<{ filter: string }>();
 
-export const hotelsFound = createAction('HOTELS_FOUND')
-                                .withProps<{ hotels: any[] }>();
+export const hotelsFound        = actionCreator('HOTELS_FOUND')
+                                    .withProps<{ hotels: any[] }>();
 
-export const hotelSearchError = createAction('HOTEL_SEARCH_ERROR')
+export const hotelSearchError   = actionCreator('HOTEL_SEARCH_ERROR')
                                     .withProps<{ error: any }>();
-
-export type Action = ReturnType<
-                        | typeof hotelsSearched
-                        | typeof hotelsFound
-                        | typeof hotelSearchError
-                        >
