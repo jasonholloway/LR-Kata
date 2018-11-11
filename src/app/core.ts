@@ -1,8 +1,5 @@
-import { ThunkAction, ThunkDispatch } from 'redux-thunk'
-import { Reducer } from 'redux';
-
-type AppActionType = 'SEARCH_START' | 'SEARCH_RESULT' | 'SEARCH_ERROR' | 'ERROR'
-type AppAction = { type: AppActionType }
+import { Action, hotelsFound } from "./actions";
+import redux from 'redux'
 
 type State = {
     isSearching: boolean,
@@ -10,23 +7,15 @@ type State = {
     errors: any[]
 }
 
-type Services = { }
-
-type Reduction = State | ThunkAction<Promise<void>, State, Services, AppAction>
-
-
-function reduce(state: State, action: AppAction): Reduction {
-    return initialize(state)
+function reduce(state: State, action: Action): State {
+    return initial(state)
         || reduceError(state, action)
         || reduceSearch(state, action)
         || noop(state);
 }
 
 
-type r = Reducer<State, AppAction>
-
-
-function initialize(state: State): Reduction | false {
+function initial(state: State): State | false {
     if(!state) {
         return {
             isSearching: false,
@@ -37,30 +26,22 @@ function initialize(state: State): Reduction | false {
     return false;
 }
 
-function reduceError(state: State, action: AppAction): Reduction | false {
+function reduceError(state: State, action: Action): State | false {
     return false;
 }
 
-function reduceSearch(state: State, action: AppAction): Reduction | false {
+function reduceSearch(state: State, action: Action): State | false {
     switch(action.type) {
-        case 'SEARCH_START':
-            return async (dispatch, getState) => {
-                //return { ...state, isSearching: true };
-            };
-
-        case 'SEARCH_RESULT':
-            return state;
-
-        case 'SEARCH_ERROR':
-            return state;
+        case hotelsFound.type:
+            return { ...state, ...{ hotels: action.hotels } };
 
         default:
             return false;
     }
 }
 
-function noop(state: State): Reduction {
+function noop(state: State): State {
     return state;
 }
 
-export { AppActionType, AppAction, Services, Reduction, State, reduce }
+export { State, reduce }

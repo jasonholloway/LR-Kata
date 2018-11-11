@@ -9,12 +9,10 @@
   "author": "Jason Holloway",
   "license": "ISC",
   "dependencies": {
-    "@types/redux-thunk": "^2.1.0",
     "express": "^4.16.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-redux": "^5.1.0",
-    "redux-thunk": "^2.3.0"
+    "react-redux": "^5.1.0"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
