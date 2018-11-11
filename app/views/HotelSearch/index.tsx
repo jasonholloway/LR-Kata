@@ -1,21 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import State from '../../State'
-import { hotelsSearched } from "../../modules/hotelSearch/actions";
 import { sumReturnTypes } from "../../utils";
+import { hotelsSearched } from "../../modules/hotelSearch/actions";
+import State from "../../State";
 
-function stateProps(state: State) {
-    return {
-        hotels: state.hotels
-    };
-}
+const stateProps = (state: State) => ({
+    hotels: state.hotelSearch.hotels
+});
 
-function dispatchProps(dispatch: Dispatch) {
-    return {
-        searchHotels(filter: string) { dispatch(hotelsSearched({ filter })) }
-    };
-}
+const dispatchProps = (dispatch: Dispatch) => ({
+    searchHotels: (filter: string) => dispatch(hotelsSearched({ filter }))
+});
 
 type Props = sumReturnTypes<typeof stateProps, typeof dispatchProps>
 

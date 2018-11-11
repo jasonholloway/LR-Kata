@@ -1,5 +1,4 @@
 import createServer from './createServer'
-import path from 'path'
 
 const port = 12345;
 

@@ -1,8 +1,5 @@
+import reducer from './reducer'
 
-type State = {
-    isSearching: boolean,
-    hotels: any[],
-    errors: any[]
-}
+type State = ReturnType<typeof reducer>
 
 export default State;

@@ -1,3 +1,4 @@
+import redux from 'redux'
 
 export type ActionCreator<Type extends string, Props = void> 
             = ((props?: Props) => Readonly<{ type: Type } & Props>)
@@ -21,3 +22,8 @@ export type sumReturnTypes<A extends ((...args: any[]) => any), B extends ((...a
 
 export type extractCreators<O> = Extract<O[keyof O], ActionCreator<any, any>>
 export type extractActions<O> = ReturnType<extractCreators<O>>
+
+
+export function createReducer<S, A extends redux.Action<any>>(fn: (state: S, action: A) => S): redux.Reducer<S, A> {
+    return fn;
+}

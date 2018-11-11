@@ -1,14 +1,16 @@
 import { Middleware } from "redux";
-import * as actions from './actions'
+import Action from "./Action";
+import { hotelsSearched, hotelsFound, searchError } from "./actions";
 
+const searcher: Middleware = ({dispatch}) => next => async (action: Action) => {
+    if(action.type == hotelsSearched.type) {
+        await fetch(null)
+                .then(res => res.json())
+                .then(body => dispatch(hotelsFound({ hotels: [] })))
+                .catch(error => dispatch(searchError({ error })));
+    }
 
-const searcher: Middleware = ({dispatch}) => next => action => {
     next(action);
 };
-
-// api.get('/hotels/search')
-// .then(res => dispatch({ type: 'SEARCH_RESULT', res }))
-// .catch(er => dispatch({ type: 'SEARCH_ERROR' }));
-
 
 export default searcher;

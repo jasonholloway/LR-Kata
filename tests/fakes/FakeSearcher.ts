@@ -1,6 +1,6 @@
 import { Middleware } from "redux";
 import { hotelsSearched, hotelsFound } from "../../app/modules/hotelSearch/actions";
-import Action from "../../app/Action";
+import Action from "../../app/modules/hotelSearch/Action";
 
 type Task = () => Promise<void> | void
 

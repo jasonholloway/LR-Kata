@@ -1,6 +1,5 @@
 import express from 'express'
 import { renderToString } from 'react-dom/server'
-import State from '../app/State';
 import createApp from '../app/createApp'
 
 function createServer(opts: { publicPath: string }) {
@@ -20,7 +19,7 @@ function createServer(opts: { publicPath: string }) {
     return app;
 }
 
-function renderPage(html: string, state: State) {
+function renderPage(html: string, state) {
     return `
         <!doctype html>
         <html>
