@@ -7,7 +7,19 @@ beforeEach(() => {
     web = request(app());
 })
 
-test('server serves something', 
-    () => web.get('/')
-            .expect(200))
-            
+describe('path /', () => {
+
+    let resp: request.Test;
+
+    beforeEach(async () => {
+        resp = web.get('/');
+    })
+
+    it('returns 200', () => resp.expect(200))
+    
+    it('serves html doc', () => resp.expect(/<html>/))
+
+    it('pre-renders section#hotelSearch', () => resp.expect(/<section id="hotelSearch"/))
+
+})
+        
