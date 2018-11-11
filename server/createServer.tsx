@@ -3,8 +3,10 @@ import { renderToString } from 'react-dom/server'
 import State from '../app/State';
 import createApp from '../app/createApp'
 
-export default () => {
+function createServer(opts: { publicPath: string }) {
     const app = express();
+
+    app.use('/public', express.static(opts.publicPath, { fallthrough: false }));
 
     app.use((req, res) => {
         const { element, store } = createApp();
@@ -16,7 +18,7 @@ export default () => {
     });
 
     return app;
-};
+}
 
 function renderPage(html: string, state: State) {
     return `
@@ -37,3 +39,5 @@ function renderPage(html: string, state: State) {
 function encode(v) {
     return JSON.stringify(v).replace(/</g, '\\u003c');
 }
+
+export default createServer;

@@ -26,7 +26,7 @@ class HotelSearch extends Component<Props> {
 
     render() {
         return <section id="hotelSearch">
-                    Hello!
+                    <h1>Hotels</h1>
                     <ul>
                         {this.props.hotels.map(h => <li key={h.id}>Hotel {h.id}</li>)}
                     </ul>

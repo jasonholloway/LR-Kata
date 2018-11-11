@@ -15,7 +15,7 @@ const shared = {
 const app = {
     ...shared,
     target: 'web',
-    entry: "./app/index.tsx",
+    entry: "./app/renderRoot.ts",
     output: {
         filename: "bundle.js",
         path: __dirname + "/dist/public"

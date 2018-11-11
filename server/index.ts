@@ -1,8 +1,9 @@
-import app from './app'
+import createServer from './createServer'
+import path from 'path'
 
 const port = 12345;
 
 console.info(`Listening on port ${port}!`);
 
-app().listen(port);
-
+createServer({ publicPath: 'dist/public' })
+    .listen(port);
