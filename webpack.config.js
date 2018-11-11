@@ -1,8 +1,8 @@
 module.exports = {
-    entry: "./src/index.ts",
+    entry: "./src/app/index.tsx",
     output: {
         filename: "bundle.js",
-        path: __dirname + "/dist"
+        path: __dirname + "/public"
     },
     devtool: "source-map",
     resolve: {
@@ -13,9 +13,5 @@ module.exports = {
             { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
-    },
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
     }
 };
