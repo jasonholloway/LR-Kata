@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { State } from './core'
 import { Dispatch } from "redux";
-import { hotelsSearched } from "./actions";
-import { sumReturnTypes } from "./utils";
+import State from '../../State'
+import { hotelsSearched } from "../../modules/hotelSearch/actions";
+import { sumReturnTypes } from "../../utils";
 
 function stateProps(state: State) {
     return {
@@ -19,8 +19,7 @@ function dispatchProps(dispatch: Dispatch) {
 
 type Props = sumReturnTypes<typeof stateProps, typeof dispatchProps>
 
-class HotelSearch extends Component<Props> {
-    
+class HotelSearch extends Component<Props> {    
     componentDidMount() {
         this.props.searchHotels('Skegness');
     }

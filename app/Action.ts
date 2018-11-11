@@ -1,4 +1,8 @@
-import * as actionCreators from './actions'
 import { extractActions } from './utils';
+import * as hotelSearchActions from './modules/hotelSearch/actions'
 
-export type Action = extractActions<typeof actionCreators>
+type Action = extractActions<
+                    | typeof hotelSearchActions
+                    >
+
+export default Action;

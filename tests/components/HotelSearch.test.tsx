@@ -3,10 +3,11 @@ import "jest-enzyme"
 import React from "react";
 import { Provider } from "react-redux";
 import { createStore, Store, applyMiddleware } from "redux";
-import { State, reducer } from '../../app/core'
-import HotelSearch from '../../app/HotelSearch'
-import { Action } from "../../app/Action";
-import { hotelsSearched } from "../../app/actions";
+import State from "../../app/State";
+import Action from "../../app/Action";
+import reducer from '../../app/reducer'
+import HotelSearch from '../../app/views/HotelSearch'
+import { hotelsSearched } from "../../app/modules/hotelSearch/actions";
 import FakeSearcher from "../fakes/FakeSearcher";
 import ActionSnooper from "../fakes/ActionSnooper";
 

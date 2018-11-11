@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
-import HotelSearch from './HotelSearch'
+import HotelSearch from './views/HotelSearch'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
-import { reducer } from './core';
+import reducer from './reducer';
 
 const root = document.getElementById('root');
 
