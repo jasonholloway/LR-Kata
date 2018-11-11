@@ -2,30 +2,29 @@ import { mount, ReactWrapper } from "enzyme";
 import React from "react";
 import { Provider } from "react-redux";
 import "jest-enzyme"
-import { createStore, Store, applyMiddleware, Dispatch } from "redux";
-import thunk, { ThunkAction } from 'redux-thunk'
-import { AppAction, State, reduce, Services } from '../../src/app/core'
+import { createStore, Store, applyMiddleware } from "redux";
+import { State, reduce } from '../../src/app/core'
 import HotelSearch from '../../src/app/HotelSearch'
-
-function buildStore(services: Services) {
-    return createStore(
-        reduce,
-        applyMiddleware(thunk.withExtraArgument(services))
-    ) as Store<State, AppAction>
-}
-
+import fakeSearcher from '../fakes/fakeSearcher'
+import { Action } from "../../src/app/actions";
 
 describe('HotelSearch', () => {
 
-    let section: ReactWrapper;
-    let store: ReturnType<typeof buildStore>; // Store<State, AppAction>;
+    let dom, section: ReactWrapper;
+    let store: Store<State, Action>;
+
+    let fakeTasks: (() => Promise<void> | void)[];
+    const flushFakes = () => Promise.all(fakeTasks.map(fn => fn()));
 
     beforeEach(() => {
-        const services = {};
+        fakeTasks = [];
 
-        store = buildStore(services);
+        store = createStore(
+            reduce,
+            applyMiddleware(fakeSearcher(t => fakeTasks.push(t)))
+        );
 
-        const dom = mount(<Provider store={store}><HotelSearch/></Provider>);
+        dom = mount(<Provider store={store}><HotelSearch/></Provider>);
         section = dom.find('section#hotelList');
     })
 
@@ -41,14 +40,16 @@ describe('HotelSearch', () => {
         it('lists no hotels', () => {
             expect(section.find('ul li')).not.toExist();
         })
-
-        it('performs default hotel search', () => {
-
-            //hotelSearcher.search.
-
-            //check that api is called
-            expect(store.getState().isSearching).toBeTruthy();
-        })
     })
 
+    describe('after a slight gap', () => {
+        beforeEach(async () => {
+            await flushFakes();
+            section = section.update();
+        })
+
+        it('lists some hotels, via Searcher', () => {
+            expect(section.find('ul li')).toExist();
+        })
+    })
 })
