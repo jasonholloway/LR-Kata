@@ -1,9 +1,5 @@
-module.exports = {
-    entry: "./src/app/index.tsx",
-    output: {
-        filename: "bundle.js",
-        path: __dirname + "/public"
-    },
+
+const shared = {
     devtool: "source-map",
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"]
@@ -14,4 +10,26 @@ module.exports = {
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     }
+}
+
+const app = {
+    ...shared,
+    target: 'web',
+    entry: "./app/index.tsx",
+    output: {
+        filename: "bundle.js",
+        path: __dirname + "/dist/public"
+    }
 };
+
+const server = {
+    ...shared,
+    target: 'node',
+    entry: './server/index.ts',
+    output: {
+        filename: "index.js",
+        path: __dirname + "/dist/server"
+    }
+};
+
+module.exports = [app, server];

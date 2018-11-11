@@ -1,4 +1,4 @@
-import app from '../../src/server/app'
+import app from '../../server/app'
 import request from 'supertest'
 
 let web: request.SuperTest<request.Test>;

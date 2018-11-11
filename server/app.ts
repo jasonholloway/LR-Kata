@@ -1,4 +1,5 @@
-import express from 'express';
+import express from 'express'
+import HotelSearch from '../app/HotelSearch'
 
 export default () => {
     const app = express();

@@ -1,13 +1,13 @@
 import { mount, ReactWrapper } from "enzyme";
+import "jest-enzyme"
 import React from "react";
 import { Provider } from "react-redux";
-import "jest-enzyme"
 import { createStore, Store, applyMiddleware } from "redux";
-import { State, reducer } from '../../src/app/core'
-import HotelSearch from '../../src/app/HotelSearch'
-import { Action } from "../../src/app/Action";
+import { State, reducer } from '../../app/core'
+import HotelSearch from '../../app/HotelSearch'
+import { Action } from "../../app/Action";
+import { hotelsSearched } from "../../app/actions";
 import FakeSearcher from "../fakes/FakeSearcher";
-import { hotelsSearched } from "../../src/app/actions";
 import ActionSnooper from "../fakes/ActionSnooper";
 
 describe('HotelSearch', () => {
