@@ -19,14 +19,14 @@ function dispatchProps(dispatch: Dispatch) {
 
 type Props = sumReturnTypes<typeof stateProps, typeof dispatchProps>
 
-class View extends Component<Props> {
+class HotelSearch extends Component<Props> {
     
     componentDidMount() {
         this.props.searchHotels('Skegness');
     }
 
     render() {
-        return <section id="hotelList">
+        return <section id="hotelSearch">
                     Hello!
                     <ul>
                         {this.props.hotels.map(h => <li key={h.id}>Hotel {h.id}</li>)}
@@ -35,4 +35,4 @@ class View extends Component<Props> {
     }
 }
 
-export default connect(stateProps, dispatchProps)(View);
+export default connect(stateProps, dispatchProps)(HotelSearch);

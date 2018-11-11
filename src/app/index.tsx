@@ -1,10 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
+import HotelSearch from './HotelSearch'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux';
+import { reducer } from './core';
 
-class Blah extends Component {
-    render() {
-        return <h1>Hello Jason!</h1>
-    }
-}
+const root = document.getElementById('root');
 
-render(<Blah/>, document.getElementById('root'))
+const store = createStore(reducer, applyMiddleware());
+
+render(
+    <Provider store={store}>
+        <HotelSearch/>
+    </Provider>,
+    root);

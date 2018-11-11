@@ -29,10 +29,10 @@ describe('HotelSearch', () => {
         );
         
         dom = mount(<Provider store={store}><HotelSearch/></Provider>);
-        section = dom.find('section#hotelList');
+        section = dom.find('section#hotelSearch');
     })
 
-    it('renders as <section> with id="hotelList"', () => {
+    it('renders as <section> with id="hotelSearch"', () => {
         expect(section).toExist();
     })
 
