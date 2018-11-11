@@ -1,6 +1,6 @@
 import { Middleware } from "redux";
-import Action from "./Action";
-import { hotelsSearched, hotelsFound, searchError } from "./actions";
+import Action from "../hotelSearch/Action";
+import { hotelsSearched, hotelsFound, searchError } from "../hotelSearch/actions";
 
 const searcher: Middleware = ({dispatch}) => next => async (action: Action) => {
     if(action.type == hotelsSearched.type) {

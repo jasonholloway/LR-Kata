@@ -3,13 +3,16 @@ import HotelSearch from "./views/HotelSearch";
 import React from "react";
 import { createStore, applyMiddleware } from "redux";
 import reducer from "./reducer";
-import searcher from './modules/hotelSearch/searcher'
+import hotelSearchDispatcher from './modules/hotelSearchDispatcher'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import State from "./State";
 
-function createApp() {
+function createApp(preState: State = undefined) {
     const store = createStore(
         reducer,
-        applyMiddleware(
-            searcher
+        preState,
+        composeWithDevTools(
+            applyMiddleware(hotelSearchDispatcher)
         )
     );
 
