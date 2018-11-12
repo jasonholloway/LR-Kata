@@ -14,4 +14,3 @@ class ActionSnooper {
 }
 
 export default ActionSnooper;
-

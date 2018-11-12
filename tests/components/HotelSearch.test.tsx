@@ -32,6 +32,12 @@ describe('HotelSearch', () => {
         section = dom.find('section#hotelSearch');
     })
 
+    async function update() {
+        await searcher.flush()
+        section = section.update();
+    }
+
+
     it('renders as <section> with id="hotelSearch"', () => {
         expect(section).toExist();
     })
@@ -56,10 +62,7 @@ describe('HotelSearch', () => {
     })
 
     describe('after a slight gap', () => {
-        beforeEach(async () => {
-            await searcher.flush();
-            section = section.update();
-        })
+        beforeEach(() => update());
 
         it('lists some hotels', () => {
             expect(section.find('ul li')).toExist();
@@ -79,13 +82,11 @@ describe('HotelSearch', () => {
         })
 
         describe('on return of searcher', () => {
-            beforeEach(async () => {
-                await searcher.flush();
-                section = section.update();
-            })
+            beforeEach(() => update());
 
             it('lists returned hotels', () => {
-                expect(section.find('ul li h3').first().text()).toMatch(/wibble/);
+                expect(section.find('ul li h3').first().text())
+                    .toMatch(/wibble/);
             })
         })
     })
