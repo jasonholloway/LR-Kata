@@ -4,7 +4,7 @@ import Action from "../../app/modules/hotelSearch/Action";
 
 type Task = () => Promise<void> | void
 
-export default class FakeSearcher {
+export default class FakeSearchDispatcher {
 
     private tasks: Task[] = []
 
@@ -19,7 +19,11 @@ export default class FakeSearcher {
             switch(action.type) {
                 case hotelsSearched.type:
                     enqueue(() => {
-                        dispatch(hotelsFound({ hotels: [ { id: 123 } ] }))
+                        dispatch(hotelsFound({ 
+                            hotels: [ 
+                                { name: 'Wibble', facilities: [], starRating: 5 } 
+                            ] 
+                        }))
                     });
                     
                 default:

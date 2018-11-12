@@ -1,12 +1,15 @@
 import { hotelsFound } from "./actions";
 import Action from "./Action";
 import { createReducer } from "../../utils";
+import Hotel from "./Hotel";
 
-const initial = {
+type State = {
+    hotels: Hotel[]
+}
+
+const initial: State = {
     hotels: []
 } 
-
-type State = typeof initial
 
 export default createReducer<State, Action>((state = initial, action) => {
     switch(action.type) {

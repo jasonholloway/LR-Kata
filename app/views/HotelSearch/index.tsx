@@ -24,7 +24,12 @@ class HotelSearch extends Component<Props> {
         return <section id="hotelSearch">
                     <h1>Hotels</h1>
                     <ul>
-                        {this.props.hotels.map(h => <li key={h.id}>Hotel {h.id}</li>)}
+                        {this.props.hotels.map(h => 
+                            <li key={h.name}>
+                                <h3>{h.name}</h3>
+                                <span>boasts {h.facilities.join(', ')}</span>
+                            </li>
+                        )}
                     </ul>
                 </section>
     }

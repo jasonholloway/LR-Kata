@@ -6,7 +6,7 @@ import { createStore, Store, applyMiddleware } from "redux";
 import reducer from '../../app/reducer'
 import HotelSearch from '../../app/views/HotelSearch'
 import { hotelsSearched } from "../../app/modules/hotelSearch/actions";
-import FakeSearcher from "../fakes/FakeSearcher";
+import FakeSearchDispatcher from "../fakes/FakeSearchDispatcher";
 import ActionSnooper from "../fakes/ActionSnooper";
 import State from "../../app/State";
 
@@ -14,18 +14,18 @@ describe('HotelSearch', () => {
 
     let dom, section: ReactWrapper;
     let snooper: ActionSnooper;
-    let searcher: FakeSearcher;
+    let searchDispatcher: FakeSearchDispatcher;
     let store: Store<State, any>;
 
     beforeEach(() => {
         snooper = new ActionSnooper();
-        searcher = new FakeSearcher();
+        searchDispatcher = new FakeSearchDispatcher();
 
         store = createStore(
             reducer,
             applyMiddleware(
                 snooper.middleware(),
-                searcher.middleware())
+                searchDispatcher.middleware())
         );
         
         dom = mount(<Provider store={store}><HotelSearch/></Provider>);
@@ -53,7 +53,7 @@ describe('HotelSearch', () => {
 
     describe('after a slight gap', () => {
         beforeEach(async () => {
-            await searcher.flush();
+            await searchDispatcher.flush();
             section = section.update();
         })
 
