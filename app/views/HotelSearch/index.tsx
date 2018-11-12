@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, ChangeEvent } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { sumReturnTypes } from "../../utils";
@@ -17,12 +17,17 @@ type Props = sumReturnTypes<typeof stateProps, typeof dispatchProps>
 
 class HotelSearch extends Component<Props> {    
     componentDidMount() {
-        this.props.searchHotels('Skegness');
+        this.props.searchHotels('');
+    }
+
+    filterChanged(ev: ChangeEvent<HTMLInputElement>) {
+        this.props.searchHotels(ev.target.value);
     }
 
     render() {
         return <section id="hotelSearch">
                     <h1>Hotels</h1>
+                    <form id="filter"><input type="text" onChange={ev => this.filterChanged(ev)}/></form>
                     <ul>
                         {this.props.hotels.map(h => 
                             <li key={h.name}>

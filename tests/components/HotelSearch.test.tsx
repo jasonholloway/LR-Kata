@@ -6,7 +6,7 @@ import { createStore, Store, applyMiddleware } from "redux";
 import reducer from '../../app/reducer'
 import HotelSearch from '../../app/views/HotelSearch'
 import { hotelsSearched } from "../../app/modules/hotelSearch/actions";
-import FakeSearchDispatcher from "../fakes/FakeSearchDispatcher";
+import FakeSearcher from "../fakes/FakeSearcher";
 import ActionSnooper from "../fakes/ActionSnooper";
 import State from "../../app/State";
 
@@ -14,18 +14,18 @@ describe('HotelSearch', () => {
 
     let dom, section: ReactWrapper;
     let snooper: ActionSnooper;
-    let searchDispatcher: FakeSearchDispatcher;
+    let searcher: FakeSearcher;
     let store: Store<State, any>;
 
     beforeEach(() => {
         snooper = new ActionSnooper();
-        searchDispatcher = new FakeSearchDispatcher();
+        searcher = new FakeSearcher();
 
         store = createStore(
             reducer,
             applyMiddleware(
                 snooper.middleware(),
-                searchDispatcher.middleware())
+                searcher.middleware())
         );
         
         dom = mount(<Provider store={store}><HotelSearch/></Provider>);
@@ -45,20 +45,48 @@ describe('HotelSearch', () => {
             expect(section.find('ul li')).not.toExist();
         })
 
-        it('searches for Skegness', () => {
+        it('shows filter box as part of form', () => {
+            expect(section.find('form#filter input[type="text"]')).toExist();
+        })
+
+        it('immediately loads hotels with empty filter', () => {
             expect(snooper.actions)
-               .toContainEqual(hotelsSearched({ filter: 'Skegness' }));
+               .toContainEqual(hotelsSearched({ filter: '' }));
         })
     })
 
     describe('after a slight gap', () => {
         beforeEach(async () => {
-            await searchDispatcher.flush();
+            await searcher.flush();
             section = section.update();
         })
 
         it('lists some hotels', () => {
             expect(section.find('ul li')).toExist();
+        })
+    })
+
+    describe('on submission of filter', () => {
+        beforeEach(async () => {
+            const input = section.find('form#filter input').first();
+            (input.instance() as any).value = 'wibble';
+            input.simulate('change');
+        })
+
+        it('dispatches search action', () => {
+            expect(snooper.actions)
+               .toContainEqual(hotelsSearched({ filter: 'wibble' }));
+        })
+
+        describe('on return of searcher', () => {
+            beforeEach(async () => {
+                await searcher.flush();
+                section = section.update();
+            })
+
+            it('lists returned hotels', () => {
+                expect(section.find('ul li h3').first().text()).toMatch(/wibble/);
+            })
         })
     })
 })

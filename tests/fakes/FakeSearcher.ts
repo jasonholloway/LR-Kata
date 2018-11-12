@@ -4,7 +4,7 @@ import Action from "../../app/modules/hotelSearch/Action";
 
 type Task = () => Promise<void> | void
 
-export default class FakeSearchDispatcher {
+export default class FakeSearcher {
 
     private tasks: Task[] = []
 
@@ -21,7 +21,8 @@ export default class FakeSearchDispatcher {
                     enqueue(() => {
                         dispatch(hotelsFound({ 
                             hotels: [ 
-                                { name: 'Wibble', facilities: [], starRating: 5 } 
+                                { name: `${action.filter}1`, facilities: [], starRating: 1 },
+                                { name: `${action.filter}2`, facilities: [], starRating: 5 } 
                             ] 
                         }))
                     });

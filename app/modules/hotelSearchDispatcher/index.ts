@@ -5,7 +5,9 @@ import data from './data.json'
 
 const searcher: Middleware = ({dispatch}) => next => async (action: Action) => {
     if(action.type == hotelsSearched.type) {
-        dispatch(hotelsFound({ hotels: data }))
+        dispatch(hotelsFound({ 
+            hotels: data.filter(d => new RegExp(action.filter).test(d.name))
+        }))
     }
 
     return next(action);
