@@ -1,9 +1,9 @@
 import { Provider } from "react-redux";
-import HotelSearch from "./views/HotelSearch";
+import HotelSearch from "./components/HotelSearch";
 import React from "react";
 import { createStore, applyMiddleware } from "redux";
 import reducer from "./reducer";
-import hotelSearcher from './modules/hotelSearcher'
+import hotelSearcher from './store/hotelSearcher'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import State from "./State";
 

@@ -2,7 +2,7 @@ import React, { Component, ChangeEvent } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { sumReturnTypes } from "../../utils";
-import { hotelsSearched } from "../../modules/hotelSearch/actions";
+import { hotelsSearched } from "../../store/hotelSearch/actions";
 import State from "../../State";
 
 const stateProps = (state: State) => ({
@@ -20,16 +20,17 @@ class HotelSearch extends Component<Props> {
         this.props.searchHotels('');
     }
 
-    filterChanged(ev: ChangeEvent<HTMLInputElement>) {
-        this.props.searchHotels(ev.target.value);
-    }
-
     render() {
+        const filterChanged = (ev) => this.props.searchHotels(ev.target.value);
+        const hotels = this.props.hotels;
+
         return <section id="hotelSearch">
                     <h1>Hotels</h1>
-                    <form id="filter"><input type="text" onChange={ev => this.filterChanged(ev)}/></form>
+                    <form id="filter">
+                        <input type="text" onChange={filterChanged}/>
+                    </form>
                     <ul>
-                        {this.props.hotels.map(h => 
+                        {hotels.map(h => 
                             <li key={h.name}>
                                 <h3>{h.name}</h3>
                                 <span>boasts {h.facilities.join(', ')}</span>

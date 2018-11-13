@@ -4,8 +4,8 @@ import React from "react";
 import { Provider } from "react-redux";
 import { createStore, Store, applyMiddleware } from "redux";
 import reducer from '../../app/reducer'
-import HotelSearch from '../../app/views/HotelSearch'
-import { hotelsSearched } from "../../app/modules/hotelSearch/actions";
+import HotelSearch from '../../app/components/HotelSearch'
+import { hotelsSearched } from "../../app/store/hotelSearch/actions";
 import FakeSearcher from "../fakes/FakeSearcher";
 import ActionSnooper from "../fakes/ActionSnooper";
 import State from "../../app/State";
@@ -32,7 +32,7 @@ describe('HotelSearch', () => {
         section = dom.find('section#hotelSearch');
     })
 
-    async function update() {
+    const flushAndUpdate = async () => {
         await searcher.flush()
         section = section.update();
     }
@@ -62,7 +62,7 @@ describe('HotelSearch', () => {
     })
 
     describe('after a slight gap', () => {
-        beforeEach(() => update());
+        beforeEach(flushAndUpdate);
 
         it('lists some hotels', () => {
             expect(section.find('ul li')).toExist();
@@ -82,7 +82,7 @@ describe('HotelSearch', () => {
         })
 
         describe('on return of searcher', () => {
-            beforeEach(() => update());
+            beforeEach(flushAndUpdate);
 
             it('lists returned hotels', () => {
                 expect(section.find('ul li h3').first().text())
