@@ -5,9 +5,9 @@ import { createStore, applyMiddleware } from "redux";
 import reducer from "./reducer";
 import hotelSearcher from './store/hotelSearcher'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import State from "./State";
+import AppState from "./AppState";
 
-function createApp(preState: State = undefined) {
+function createApp(preState: AppState = undefined) {
     const store = createStore(
         reducer,
         preState,

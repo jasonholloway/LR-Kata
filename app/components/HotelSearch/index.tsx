@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { sumReturnTypes } from "../../utils";
 import { hotelsSearched } from "../../store/hotelSearch/actions";
-import State from "../../State";
+import AppState from "../../AppState";
 
-const stateProps = (state: State) => ({
+const stateProps = (state: AppState) => ({
     hotels: state.hotelSearch.hotels
 });
 

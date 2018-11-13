@@ -8,14 +8,14 @@ import HotelSearch from '../../app/components/HotelSearch'
 import { hotelsSearched } from "../../app/store/hotelSearch/actions";
 import FakeSearcher from "../fakes/FakeSearcher";
 import ActionSnooper from "../fakes/ActionSnooper";
-import State from "../../app/State";
+import AppState from "../../app/AppState";
 
 describe('HotelSearch', () => {
 
     let dom, section: ReactWrapper;
     let snooper: ActionSnooper;
     let searcher: FakeSearcher;
-    let store: Store<State, any>;
+    let store: Store<AppState, any>;
 
     beforeEach(() => {
         snooper = new ActionSnooper();
